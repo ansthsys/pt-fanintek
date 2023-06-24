@@ -35,6 +35,6 @@ class PostLoginRequest extends FormRequest
             'success'   => false,
             'message'   => 'validation errors',
             'data'      => $validator->errors()
-        ]));
+        ], 400));
     }
 }
