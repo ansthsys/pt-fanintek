@@ -31,8 +31,10 @@ class AuthController extends Controller
             'message' => 'successful login',
             'data' => [
                 'user' => $user,
-                'token' => $token,
-                'tokenType' => 'Bearer'
+                'auth' => [
+                    'token' => $token,
+                    'type' => 'Bearer'
+                ]
             ]
         ], 200);
     }
