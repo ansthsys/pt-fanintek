@@ -47,7 +47,7 @@ class PresenceController extends Controller
             'success' => true,
             'message' => 'success get all data user',
             'data' => $data
-        ]);
+        ], 200);
     }
 
     public function insert(InsertPresenceRequest $request)
