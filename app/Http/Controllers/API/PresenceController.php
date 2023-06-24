@@ -46,7 +46,6 @@ class PresenceController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'success get all data user',
-            'total' => count($data),
             'data' => $data
         ]);
     }
