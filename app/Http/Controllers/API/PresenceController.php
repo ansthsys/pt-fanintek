@@ -11,6 +11,48 @@ use App\Http\Requests\InsertPresenceRequest;
 
 class PresenceController extends Controller
 {
+    public function index(Request $request)
+    {
+        $data = [];
+        $queryIN = Epresence::where('id_users', Auth::id())->where('type', 'IN')->get();
+        $queryOUT = Epresence::where('id_users', Auth::id())->where('type', 'OUT')->get();
+
+        if (count($queryIN) != 0) {
+            foreach ($queryIN as $itemIN) {
+                $tmp = [];
+                $dateIN = date('Y-m-d', strtotime($itemIN->waktu));
+                $timeIN = date('H:m:s', strtotime($itemIN->waktu));
+
+                $tmp['id_user'] = $itemIN->id_users;
+                $tmp['nama_user'] = Auth::user()->nama;
+                $tmp['tanggal'] = $dateIN;
+                $tmp['waktu_masuk'] = $timeIN;
+                $tmp['waktu_pulang'] = null;
+                $tmp['status_masuk'] = $itemIN->is_approve ? 'APPROVE' : 'REJECT';
+                $tmp['status_pulang'] = null;
+
+                foreach ($queryOUT as $itemOUT) {
+                    $dateOUT = date('Y-m-d', strtotime($itemOUT->waktu));
+                    $timeOUT = date('H:m:s', strtotime($itemOUT->waktu));
+
+                    if ($dateIN == $dateOUT) {
+                        $tmp['waktu_pulang'] = $timeOUT;
+                        $tmp['status_pulang'] = $itemOUT->is_approve ? 'APPROVE' : 'REJECT';
+                    }
+                }
+
+                array_push($data, $tmp);
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'success get all data user',
+            'total' => count($data),
+            'data' => $data
+        ]);
+    }
+
     public function insert(InsertPresenceRequest $request)
     {
         $dt = Carbon::create($request->waktu);
