@@ -9,6 +9,8 @@ class Epresence extends Model
 {
     use HasFactory;
 
+    protected $table = "epresence";
+
     protected $fillable = [
         'id_users',
         'type',
