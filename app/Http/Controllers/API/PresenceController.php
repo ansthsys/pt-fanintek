@@ -93,4 +93,38 @@ class PresenceController extends Controller
             'message' => "success presence {$request->type} date {$request->waktu}"
         ], 201);
     }
+
+    public function approve(Request $request, int $presenceId)
+    {
+        if (Auth::user()->npp_supervisor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'you dont have permission to access this route'
+            ], 403);
+        }
+
+        $data = Epresence::find($presenceId);
+
+        if (!$data) {
+            return response()->json([
+                'success' => false,
+                'message' => "presence with id {$presenceId} not found"
+            ], 404);
+        }
+
+        if ($data->is_approve) {
+            return response()->json([
+                'success' => false,
+                'message' => "presence with id {$presenceId} already approved"
+            ], 400);
+        }
+
+        $data->update(['is_approve' => true]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'success approving presence',
+            'data' => $data
+        ], 200);
+    }
 }
