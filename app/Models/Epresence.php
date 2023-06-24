@@ -10,6 +10,7 @@ class Epresence extends Model
     use HasFactory;
 
     protected $table = "epresence";
+    public $timestamps = false;
 
     protected $fillable = [
         'id_users',
