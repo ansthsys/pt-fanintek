@@ -1,5 +1,7 @@
 # Test Code RESTful API
 
+RESTful API Documentation: [here](https://documenter.getpostman.com/view/20118417/2s93z6djFG)
+
 Installation Guide:
 1.    Clone repo ```https://github.com/ansthsys/pt-fanintek```
 2.    Switch to branch ```test-script```
