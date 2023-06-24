@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Epresence;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -117,6 +118,15 @@ class PresenceController extends Controller
                 'success' => false,
                 'message' => "presence with id {$presenceId} already approved"
             ], 400);
+        }
+
+        $user = User::find($data->id_users);
+
+        if (Auth::user()->npp != $user->npp_supervisor) {
+            return response()->json([
+                'success' => false,
+                'message' => "you are not the supervisor of this user"
+            ], 403);
         }
 
         $data->update(['is_approve' => true]);
