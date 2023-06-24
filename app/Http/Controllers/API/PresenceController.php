@@ -21,22 +21,20 @@ class PresenceController extends Controller
             foreach ($queryIN as $itemIN) {
                 $tmp = [];
                 $dateIN = date('Y-m-d', strtotime($itemIN->waktu));
-                $timeIN = date('H:m:s', strtotime($itemIN->waktu));
 
                 $tmp['id_user'] = $itemIN->id_users;
                 $tmp['nama_user'] = Auth::user()->nama;
                 $tmp['tanggal'] = $dateIN;
-                $tmp['waktu_masuk'] = $timeIN;
+                $tmp['waktu_masuk'] = substr($itemIN->waktu, 11);
                 $tmp['waktu_pulang'] = null;
                 $tmp['status_masuk'] = $itemIN->is_approve ? 'APPROVE' : 'REJECT';
                 $tmp['status_pulang'] = null;
 
                 foreach ($queryOUT as $itemOUT) {
                     $dateOUT = date('Y-m-d', strtotime($itemOUT->waktu));
-                    $timeOUT = date('H:m:s', strtotime($itemOUT->waktu));
 
                     if ($dateIN == $dateOUT) {
-                        $tmp['waktu_pulang'] = $timeOUT;
+                        $tmp['waktu_pulang'] = substr($itemOUT->waktu, 11);
                         $tmp['status_pulang'] = $itemOUT->is_approve ? 'APPROVE' : 'REJECT';
                     }
                 }
