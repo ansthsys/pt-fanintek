@@ -5,7 +5,7 @@ RESTful API Documentation: [here](https://documenter.getpostman.com/view/2011841
 Installation Guide:
 1.    Clone repo ```https://github.com/ansthsys/pt-fanintek```
 2.    Change directory into project ```cd pt-fanintek```
-3.    Switch to branch ```test-script```
+3.    Switch to branch test-script ```git checkout test-script```
 4.    Install dependecies from Composer ```composer install```
 5.    Install dependecies from NPM ```npm install```
 6.    Create .env file ```cp .env.example .env```
